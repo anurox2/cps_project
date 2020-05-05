@@ -1,0 +1,12 @@
+These instructions will help you run the python code on HPC
+
+1. Create a start.sh script and put the following lines in it.
+## Loading Python3
+module load Python/3.7.4-GCCcore-8.3.0
+## Starting the virtual environment
+source /path_to_virtual_environment_folder/virtualenvs/test_environment/bin/activate
+export PYTHONDONTWRITEBYTECODE=1
+python /path_to_python_code_file/cps_project_code.py
+
+2. Run the following command on terminal.
+sbatch --time=06:00:00 --mem-per-cpu=2G --cpus-per-task=16 --ntasks=1 --nodes=1 --gres=gpu:1 ./start.sh
