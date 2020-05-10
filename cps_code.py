@@ -68,8 +68,8 @@ df3_final = df3_final.sample(frac=1).reset_index(drop=True)
 
 
 ## Using only a subset of the data
-df4_test = df3_final.head(1000)
-#f4_test = df3_final.copy(deep=True)
+#df4_test = df3_final.head(10000)
+df4_test = df3_final.copy(deep=True)
 
 X = df4_test['URLs'].tolist()
 
@@ -107,7 +107,7 @@ metrics = ModelMetrics()
 
 # ML model ----------------------------------------------
 
-epochs = 5
+epochs = 50
 ml_model1 = Sequential()
 
 ml_model1.add(Embedding(max_features, 128, input_length=maxlen))
@@ -120,7 +120,7 @@ ml_model1.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['mae
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2,)
 
-history = ml_model1.fit(X_train, y_train, batch_size=128, epochs=epochs, validation_data=(X_test, y_test), verbose=2, callbacks=[metrics])
+history = ml_model1.fit(X_train, y_train, batch_size=128, epochs=epochs, validation_data=(X_test, y_test), verbose=1, callbacks=[metrics])
 
 y_pred = ml_model1.predict(X_test)
 out_data = {'y':y_test, 'pred':y_pred, 'confusion_matrix': sklearn.metrics.confusion_matrix(y_test, y_pred>0.5)}
